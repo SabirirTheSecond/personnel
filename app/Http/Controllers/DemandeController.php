@@ -17,18 +17,20 @@ class DemandeController extends Controller
     {
         $demandes = Demande::where("element_id",$id)->get();
         $path = 'elements/'.$id. '/demande';
+        $element_path = 'elements/'.$id;
     //    dd($demandes);
         return view("elements.demande.index",
-        compact('demandes','path'));
+        compact('demandes','path','element_path'));
     }
 
     public function chef_index($id)
     {
         $demandes = Demande::where("chef_section_id",$id)->get();
         $path = 'chef_sections/'.$id. '/demande';
+        $chef_section_path = 'chef_sections/'.$id;
     //    dd($path);
         return view("chef_section.demande.index",
-            compact('demandes', 'path'));
+            compact('demandes', 'path','chef_section_path'));
     }
 
     /**
@@ -71,7 +73,7 @@ class DemandeController extends Controller
             $demande->element_id = $request->element_id;
     
             $demande->save();
-            return redirect('/elements')->with('success','demande ajouté avec succes');
+            return redirect('/elements/'.$demande->element_id.'/demande/index')->with('success','demande ajouté avec succes');
 
     
         }
@@ -87,7 +89,7 @@ class DemandeController extends Controller
     
             $demande->save();
     
-            return redirect('/chef_sections')->with('success','demande ajouté avec succes');
+            return redirect('/chef_sections/'.$demande->chef_section_id.'/demande/index')->with('success','demande ajouté avec succes');
         }
        
 

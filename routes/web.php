@@ -11,11 +11,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
 
 
+
+Route::middleware('auth')->group( function(){
+    Route::get('/', function () {
+        return view('welcome');
+    });
 // Billets routes
 Route::get('billets/index',[BilletController::class,'index']);
 Route::get('billets/create',[BilletController::class,'create']);
@@ -46,14 +48,15 @@ Route::delete('/elements/{id}',[ElementController::class,'destroy'])->name('elem
 // demandes elements
 Route::get('elements/{id}/demande/index', [DemandeController::class,'element_index']);
 Route::get('elements/{id}/demande/create', [DemandeController::class,'element_create']);
-Route::post('/elements', [DemandeController::class,'store']);
+Route::post('/elements/{id}/demande/index', [DemandeController::class,'store']);
 Route::get('elements/{element_id}/demande/{demande_id}/', [DemandeController::class,'element_show']);
 // Compte-rendu elements
 
 Route::get('elements/{id}/compte_rendu/index', [CompteRenduController::class,'element_index']);
 Route::get('elements/{id}/compte_rendu/create', [CompteRenduController::class,'element_create']);
-Route::post('/elements', [CompteRenduController::class,'store']);
-Route::get('elements/{elements_id}/compte_rendu/{compte_rendu_id}/show', [CompteRenduController::class,'element_show']);
+Route::post('/elements/{id}/compte_rendu/index', [CompteRenduController::class,'store']);
+Route::get('elements/{element_id}/compte_rendu/{compte_rendu_id}/show', [CompteRenduController::class,'element_show']);
+Route::delete('elements/{element_id}/compte_rendu/{compte_rendu_id}', [CompteRenduController::class,'element_destroy'])->name('comptes.destroy');
 
 
 // Chef Section routes
@@ -83,15 +86,17 @@ Route::delete('/chef_sections/{id}', [ChefSectionController::class, 'destroy'])-
 
 Route::get('chef_sections/{id}/demande/index', [DemandeController::class,'chef_index']);
 Route::get('chef_sections/{id}/demande/create', [DemandeController::class,'chef_create']);
-Route::post('/chef_sections', [DemandeController::class,'store']);
+Route::post('/chef_sections/{id}/demande/index', [DemandeController::class,'store']);
 Route::get('chef_sections/{chef_section_id}/demande/{demande_id}/', [DemandeController::class,'chef_show']);
 // Compte-rendu chef
 
 Route::get('chef_sections/{id}/compte_rendu/index', [CompteRenduController::class,'chef_index']);
 Route::get('chef_sections/{id}/compte_rendu/create', [CompteRenduController::class,'chef_create']);
-Route::post('/chef_sections', [CompteRenduController::class,'store']);
+Route::post('/chef_sections/compte_rendu/index', [CompteRenduController::class,'store']);
 Route::get('chef_sections/{chef_section_id}/compte_rendu/{compte_rendu_id}/show', [CompteRenduController::class,'chef_show']);
+Route::delete('chef_sections/{chef_section_id}/compte_rendu/{compte_rendu_id}', [CompteRenduController::class,'chef_destroy'])->name('comptes.destroy');
 
+});
 
 
 Route::get('/dashboard', function () {

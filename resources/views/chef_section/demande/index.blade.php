@@ -2,7 +2,7 @@
 
     <x-slot:heading>
         Demandes
-        <x-button href="/chef_sections">Retour</x-button>
+        {{-- <x-button href="/chef_sections" class="btn btn-light">Retour</x-button> --}}
     </x-slot:heading>
 
     {{-- <div >
@@ -11,42 +11,44 @@
             <input type="text"  name="search" placeholder="chercher un element..">
         </form>
       </div> --}}
-    <h1 class="text-black-500 mb-2">Liste des demandes:</h1>
+    
 
     @if(session('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <div class="alert alert-success" role="alert">
         {{ session('success') }}
     </div>
   @endif
   
   @if(session('error'))
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+    <div class="alert alert-danger">
         {{ session('error') }}
     </div>
   @endif
     <div class="space-y-4">
     @foreach ($demandes as $demande)
 
-    <a href="{{ $demande->id}}" class=" block px-4 py-6 border border-gray-200 rounded-lg">
+    <a href="{{ $demande->id}}" class="  list-group list-group-flush list-group-horizontal">
     
-        <li><strong>demande</strong>: {{ $demande->titre}} {{ $demande->contenu}}
+        <li class="mb-3 list-group-item list-group-item-action 
+       list-group-item-light">
+            <strong>demande</strong>: {{ $demande->titre}} {{ $demande->contenu}}
     
             {{ $demande->date}} 
         
     </li>
     
-    {{-- </a> --}}
-    <form action="{{ route('elements.destroy', $demande->id)}}" method="POST">
+    </a>
+    
+    @endforeach
+{{-- <form action="{{ route('elements.destroy', $demande->id)}}" method="POST">
         @method('delete')
         @csrf
         
-        <button type="submit" class="bg-red text-white-400" >Delete</button>
-    </form>
-    @endforeach
-
+        <button type="submit" class="btn btn-danger" >Delete</button>
+    </form> --}}
     </div>
-    <x-button href="{{url(''.$path.'/create')}}">Faire demande</x-button>
-
+    <x-button href="{{url(''.$path.'/create')}}" class="btn btn-secondary">Faire demande</x-button>
+    <a href="/{{$chef_section_path}}" class="btn btn-light">Retour</a>
     <div>
         {{-- {{ $demandes->links() }} --}}
     </div>

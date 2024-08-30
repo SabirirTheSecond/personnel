@@ -2,15 +2,11 @@
 
     <x-slot:heading>
         Demeandes 
+        <a href="/{{$element_path}}" class="btn btn-light">Retour</a>
     </x-slot:heading>
 
-    {{-- <div >
-       
-        <form action="{{url('/elements/{id}/demande')}}" method="GET">
-            <input type="text"  name="search" placeholder="chercher un element..">
-        </form>
-      </div> --}}
-    <h1 class="text-black-500 mb-2">Liste des demandes:</h1>
+    
+    
 
     @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -27,21 +23,23 @@
     @foreach ($demandes as $demande)
 
     
-    <a href="{{$demande->id}}" class=" block px-4 py-6 border border-gray-200 rounded-lg">
+    <a href="{{ $demande->id}}" class="  list-group list-group-flush list-group-horizontal">
     
-        <li><strong>demande</strong>: {{ $demande->titre}} {{ $demande->contenu}}
-            demande_id: {{ $demande->id}}
+        <li class="mb-3 list-group-item list-group-item-action 
+       list-group-item-light">
+            <strong>demande</strong>: {{ $demande->titre}} {{ $demande->contenu}}
+    
             {{ $demande->date}} 
         
     </li>
     
-    {{-- </a> --}}
+    </a>
     
     
     @endforeach
     </div>
 
-    <x-button href="{{url(''.$path.'/create')}}">Faire demande</x-button>
+    <x-button href="{{url(''.$path.'/create')}}" class="btn btn-secondary">Faire demande</x-button>
     {{-- <div> --}}
         {{-- {{ $demandes->links() }} --}}
     {{-- </div> --}}

@@ -17,15 +17,30 @@
   @endif
 
 
-    <p>
-        <strong> Titre: </strong> {{$demande->titre}} <strong> Contenu: </strong>{{$demande->contenu}} 
-
-        <strong> Date: </strong> {{$demande->date}} 
-    </p>
-
+  <table class="table">
+    <thead >
+      <tr>
+        <th scope="col">Titre</th>
+        <th scope="col">Contenu</th>
+        <th scope="col">Date</th>
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" >{{$demande->titre}} </th>
+        <td>{{$demande->contenu}}</td>
+        <td>{{$demande->date}}</td>
+       
+      </tr>
+     
+      
+    </tbody>
+  </table>
     <div>
         {{-- <x-button href="{{ url('/chef_sections/' .$chef->id. '/edit')}}">Edit</x-button> --}}
-        <x-button href="index">Retour</x-button>
+        <x-button href="index" class="btn btn-light">Retour</x-button>
         
     </div>
 

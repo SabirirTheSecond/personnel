@@ -2,6 +2,7 @@
 
     <x-slot:heading>
         Billet
+        <x-button href="index" class="btn btn-light">Retour</x-button>
     </x-slot:heading>
    
     @if(session('success'))
@@ -16,25 +17,46 @@
     </div>
   @endif
 
-    <p>
-        <strong> Date: </strong> {{$billet->date}} <strong> القوة: </strong>{{$billet->force}} 
-
-        <strong> الحضور: </strong> {{$billet->presence}} 
-        <strong> الغياب: </strong> {{$billet->absence}}
-        <strong> السبب: </strong> {{$billet->raison}}
+  <table class="table">
+    <thead >
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">القوة</th>
+        <th scope="col">الحضور</th>
+        <th scope="col">الغياب</th>
+        <th scope="col">السبب</th>
         
-    </p>
-
-    <div>
-        <x-button href="{{$billet->id. '/edit'}}">Edit</x-button>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" >{{$billet->date}}</th>
+        <td>{{$billet->force}}</td>
+        <td>{{$billet->presence}}</td>
+        <td>{{$billet->absence}}</td>
+        <td>{{$billet->raison}}</td>
         
-        <x-button href="index">Retour</x-button>
-        <form action={{ route('billets.destroy', $billet->id)}} method="POST">
+        
+      </tr>
+     
+      
+    </tbody>
+  </table>
+    
+  
+
+    
+    
+    
+        <span><form action={{ route('billets.destroy', $billet->id)}} method="POST">
             @csrf
             @method('DELETE')
-        <button type="submit">Delete</button>
+        <button type="submit" class="btn btn-danger ">Delete</button>
         </form>
+            </span>    
+    
+        
 
-    </div>
+    
 
 </x-layout>

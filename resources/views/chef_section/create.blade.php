@@ -1,244 +1,206 @@
 <x-layout>
 
-    <x-slot:heading>
-        Ajouter un Chef Section
-        <x-button href="{{ url('/chef_sections/' )}}">Retour</x-button>
-    </x-slot:heading>
-    
-    
-    @if(session('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-        {{ session('success') }}
-    </div>
+  <x-slot:heading>
+      Ajouter un Chef Section 
+      <x-button href="{{ url('/chef_sections/') }} ">Retour</x-button>
+  </x-slot:heading>
+  
+  
+  @if(session('success'))
+  <div class="alert alert-success" role="alert">
+      {{ session('success') }}
+  </div>
 @endif
 
 @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
+  <div class="alert alert-danger">
+      {{ session('error') }}
+  </div>
 @endif
+      
+      
+          <!--
+        This example requires some changes to your config:
         
-        
-            <!--
-          This example requires some changes to your config:
-          
-          ```
-          // tailwind.config.js
-          module.exports = {
+        ```
+        // tailwind.config.js
+        module.exports = {
+          // ...
+          plugins: [
             // ...
-            plugins: [
-              // ...
-              require('@tailwindcss/forms'),
-            ],
-          }
-          ```
-        -->
-        <form action="/chef_sections/create "method="POST" >
-            
-            @csrf
-        
-            <div class="space-y-12">
-              <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">Ajouter un Chef Section</h2>
-                <p class="mt-1 text-sm leading-6 text-gray-600">Entrer les informations </p>
+            require('@tailwindcss/forms'),
+          ],
+        }
+        ```
+      -->
+      <form action="/chef_sections/create" method="POST" class=" ">
           
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div class="sm:col-span-4">
-                    <label for="nom" class="block text-sm font-medium leading-6 text-gray-900">nom</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <input type="text" name="nom" id="nom" autocomplete="nom"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="nom" required value="{{ old('nom')}}">
-                      </div>
-                    </div>
-        
-                    @error('nom')
-                    <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                @enderror
-                  </div>
+        <fieldset class="shadow-lg bg-white rounded">
 
-{{-- --------------------- Prenom------------ ------------}}
-                  <div class="sm:col-span-4">
-                    <label for="prenom" class="block text-sm font-medium leading-6 text-gray-900">prenom</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <input type="text" name="prenom" id="prenom"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="prenom" required value="{{ old('prenom')}}">
-                      </div>
-                    </div>
-        
-                    @error('prenom')
-                    <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                @enderror
-                  </div>
-        
-                  
-{{----------------- Matricule --------------}}
+          @csrf
+      
+          <div class="mt-3 mb-3 row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="nom" class="col-form-label">Nom</label>
+            </div>
+            <div class="col-auto">
+              <input type="text" name="nom" class="form-control" value ="{{old('nom')}}">
 
-                  <div class="sm:col-span-4">
-                    <label for="matricule" class="block text-sm font-medium leading-6 text-gray-900">matricule</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <input type="text" name="matricule" id="matricule"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="matricule" required value="{{ old('matricule')}}">
-                      </div>
-                    </div>
-                    @error('matricule')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
-                   
-                  </div>
-{{-- ---------------------- Section ------------------------------ --}}
+            </div>
+            @error('nom')
+            <p class="danger"> {{ $message}}</p>
+        @enderror
+          </div>
 
-                        <div class="sm:col-span-4">
-                            <label for="section" class="block text-sm font-medium leading-6 text-gray-900">Section</label>
-                            <div class="mt-2">
-                            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                
-                                <input type="text" name="section" id="section"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"  placeholder="section" value="{{ old('section')}}">
-                                </div>
-                            
-                        </div>
-                    @error('section')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
+            <div class="mb-3 row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="prenom" class="col-form-label">Prenom</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" name="prenom" class="form-control" required value="{{old('prenom')}}">
+              </div>
+              @error('prenom')
+            <p class="danger"> {{ $message}}</p>
+        @enderror
+            </div>
+            {{-- ------------------------------  --}}
+            <div class="mb-3 row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="matricule" class="col-form-label">Matricule</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" name="matricule" class="form-control" required value="{{old('matricule')}}">
+              </div>
+              @error('matricule')
+            <p class="danger"> {{ $message}}</p>
+        @enderror
+            </div>
+           {{-- ----------------------- --}}
+            <div class="mb-3 row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="section" class="col-form-label">Section</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" name="section" class="form-control" required value="{{old('section')}}">
+              </div>
+              @error('section')
+            <p class="danger"> {{ $message}}</p>
+        @enderror
+            </div>
+           {{-- -------------------------------------- --}}
 
-                </div>
-                {{-- ---------------------- Section ------------------------------ --}}
-
-                <div class="sm:col-span-4">
-                    <label for="date_naissance" class="block text-sm font-medium leading-6 text-gray-900">Date de naissance </label>
-                    <div class="mt-2">
-                    <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <input type="date" name="date_naissance" id="date_naissance"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Date de naissance" value="{{old('date_naissance')}}">
-                        </div>
-                    
-                </div>
+           <div class="mb-3 row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="date_naissance" class="col-form-label">Date de naissance</label>
+            </div>
+            <div class="col-auto">
+              <input type="date" name="date_naissance" class="form-control" required value="{{old('date_naissance')}}" required>
+            </div>
             @error('date_naissance')
-                <p class="text-red-500 font-semibold"> {{ $message}}</p>
-            @enderror
+          <p class="danger"> {{ $message}}</p>
+      @enderror
+          </div>
+              
+        
+{{-- ------------------------situation Familliale ------------------- --}}
 
+          <div class="mb-3 row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="situation_familliale" class="col-form-label">Situation Familliale</label>
+            </div>
+            <div class="col-auto">
+              <select  name="situation_familliale" 
+                  class="form-control" required value="{{old('situation_familliale')}}" >
+              <option value="célibataire">Célibataire</option>
+              <option value="marié">Marié</option>
+              <option value="divorcé">Divorcé</option>
+              <option value="veuf">Veuf</option>
+              </select>
+            </div>
+            @error('situation_familliale')
+          <p class="danger"> {{ $message}}</p>
+          @enderror
+          </div>
+
+{{------------------------- Photo ------------------- --}}
+
+<div class="mb-3 row g-3 align-items-center">
+  <div class="col-auto">
+    <label for="photo" class="col-form-label">Photo</label>
+  </div>
+  <div class="col-auto">
+    <input type="file"  name="photo" 
+        class="form-control"  value="{{old('photo')}}" >
+    
+  </div>
+  @error('photo')
+<p class="danger"> {{ $message}}</p>
+@enderror
+</div>
+                
+{{-- ------------- Vehicule---------- --}}
+        <div class="mb-3 row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="vehiculé" class="col-form-label">Vehiculé</label>
+          </div>
+          <div class="col-auto">
+            <select name="vehiculé" class="form-control" required value="{{old('vehiculé')}}" required>
+              <option value="non">Non</option>
+              <option value="oui">Oui</option>
+            </select>
+          </div>
+          @error('vehiculé')
+        <p class="danger"> {{ $message}}</p>
+        @enderror
+        </div>
+              
+  {{----------------- Groupe Sanguin----------------}}
+
+        <div class="mb-3 row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="groupe_sanguin" class="col-form-label">Groupe Sanguin</label>
+          </div>
+          <div class="col-auto">
+            <select  name="groupe_sanguin" id="groupe_sanguin"   class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{old('groupe_sanguin')}}" >
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+          </select>
+          </div>
+          @error('groupe_sanguin')
+        <p class="danger"> {{ $message}}</p>
+        @enderror
         </div>
 
-{{-- ------------------------Situation Familliale ------------------- --}}
-
-                  <div class="sm:col-span-4">
-                    <label for="situation" class="block text-sm font-medium leading-6 text-gray-900">Situation Familliale</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <select  name="situation" id="situation" class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"  >
-                     
-                            <option value="célibataire">Célibataire</option>
-                            <option value="marié">Marié</option>
-                            <option value="divorcé">Divorcé</option>
-                            <option value="veuf">Veuf</option>
-                        </select>
-                    </div>
-                    </div>
-                    @error('situation')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
-                   
-                  </div>
-
-  {{------------------------ Lieu de travaille --------------------------}}
-
-                  <div class="sm:col-span-4">
-                    <label for="ancien_lieu" class="block text-sm font-medium leading-6 text-gray-900">Ancien lieu de travail</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <input type="text" name="ancien_lieu" id="ancien_lieu"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="الكتيبة 33 مشاة مستقلة" value="{{old('ancien_lieu')}}">
-                      </div>
-                    </div>
-                    @error('ancien_lieu')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
-                   
-                  </div>
-
- {{------------------------- Photo ------------------- --}}
-
-                  <div class="sm:col-span-4">
-                    <label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Photo</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <input type="file" name="photo" id="photo" accept="image/*"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"  >
-                      </div>
-                    </div>
-                    @error('photo')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
-                   
-                  </div>
-                  
-{{-- ------------- Vehicule---------- --}}
-                  <div class="sm:col-span-4">
-                    <label for="vehiculé" class="block text-sm font-medium leading-6 text-gray-900">Vehicule</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <select  name="vehiculé" id="vehiculé"   class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"  value="{{old('vehiculé')}}">
-                            <option value="oui">Oui</option>
-                            <option value="non">Non</option>
-                        </select>
-                      </div>
-                    </div>
-                    @error('vehiculé')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
-                   
-                  </div>
-                
-    {{----------------- Groupe Sanguin----------------}}
-                  <div class="sm:col-span-4">
-                    <label for="groupe_sanguin" class="block text-sm font-medium leading-6 text-gray-900">Groupe Sanguin</label>
-                    <div class="mt-2">
-                      <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        
-                        <select  name="groupe_sanguin" id="groupe_sanguin"   class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{old('groupe_sanguin')}}" >
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                        </select>
-                      </div>
-                    </div>
-                    @error('groupe_sanguin')
-                        <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                    @enderror
-                   
-                  </div>
 
 {{-- ---------------- Arme------------- --}}
-                    <div class="sm:col-span-4">
-                        <label for="arme" class="block text-sm font-medium leading-6 text-gray-900">Arme</label>
-                        <div class="mt-2">
-                        <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            
-                            <input type="text" name="arme" id="arme"  class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"  value="{{old('arme')}}">
-                        </div>
-                        </div>
-                        @error('arme')
-                            <p class="text-red-500 font-semibold"> {{ $message}}</p>
-                        @enderror
-                    
-                    </div>
-
-                    
-             
-            <div class="mt-6 flex items-center justify-end gap-x-6">
-              <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-              <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+          <div class="mb-3 row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="arme" class="col-form-label">Arme</label>
             </div>
-          </form>
-          
-       
+            <div class="col-auto">
+              <input type="text" name="arme" class="form-control" required value="{{old('arme')}}" required>
+            </div>
+            @error('arme')
+          <p class="danger"> {{ $message}}</p>
+          @enderror
+          </div>
+
+                  
+           
+          <div class=" mb-3 mt-6 flex items-center justify-end gap-x-6">
+            <x-button href="/chef_sections">Cancel</x-button>
+            <button type="submit" 
+            class=" btn btn-info">Save</button>
+          </div>
+        
+        </fieldset>   
+    </form>
+        
+     
 </x-layout>

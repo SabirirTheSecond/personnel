@@ -1,0 +1,16 @@
+/* body{
+    background-color: black;
+} */
+
+nav {
+    background-color: lightblue;
+    padding: 1% 1% 1% 1%;
+    height: 10% ;
+    width: 100%;
+   
+    }
+
+    .container{
+        display: flex;
+        justify-content: space-around;
+    }

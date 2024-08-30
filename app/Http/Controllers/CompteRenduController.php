@@ -12,26 +12,29 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class CompteRenduController extends BaseController
 {
     use AuthorizesRequests;
-    
+
     /**
      * Display a listing of the resource.
      */
     public function element_index($id)
     {
-        $comptes = CompteRendu::where("element_id",$id)->get();
+        $comptes = CompteRendu::where("element_id",$id)->latest()->paginate(15);
         $path = 'elements/'.$id. '/compte_rendu';
-    //    dd($demandes);
+        $element_path = 'elements/'.$id;
+        //    dd($comptes);
+
         return view("elements.compte_rendu.index",
-        compact('comptes','path'));
+        compact('comptes','path','element_path'));
     }
 
     public function chef_index($id)
     {
-        $comptes = CompteRendu::where("chef_section_id",$id)->get();
+        $comptes = CompteRendu::where("chef_section_id",$id)->latest()->paginate(15);
         $path = 'chef_sections/'.$id. '/compte_rendu';
+        $chef_section_path= 'chef_sections/'.$id;
     //    dd($path);
         return view("chef_section.compte_rendu.index",
-            compact('comptes', 'path'));
+            compact('comptes', 'path','chef_section_path'));
     }
 
     /**
@@ -60,65 +63,67 @@ class CompteRenduController extends BaseController
             'avis_admin' => 'required'
         ]);
 
-        $demande = new CompteRendu();
+        $compte = new CompteRendu();
 
         if( request()->__isset('element_id')){
 
             // $element= Element::findOrFail($request->input('element_id'));
-            $demande->titre = $request->titre;
-            $demande->contenu = $request->contenu;
-            $demande->date = $request->date;
+            $compte->titre = $request->titre;
+            $compte->contenu = $request->contenu;
+            $compte->date = $request->date;
            
-            $demande->avis_admin = $request->avis_admin;
-            $demande->avis_chef_unité = $request->avis_chef_unité;
-            $demande->element_id = $request->element_id;
+            $compte->avis_admin = $request->avis_admin;
+            $compte->avis_chef_unité = $request->avis_chef_unité;
+            $compte->element_id = $request->element_id;
     
-            $demande->save();
-            return redirect('/elements')->with('success','demande ajouté avec succes');
+            $compte->save();
+            return redirect('/elements/'.$compte->element_id.'/compte_rendu/index')->with('success','Compte-Rendu ajouté avec succes');
 
     
         }
         elseif( request()->__isset('chef_section_id'))
         {
-            $demande->titre = $request->titre;
-            $demande->contenu = $request->contenu;
-            $demande->date = $request->date;
+            $compte->titre = $request->titre;
+            $compte->contenu = $request->contenu;
+            $compte->date = $request->date;
             
-            $demande->avis_admin = $request->avis_admin;
-            $demande->avis_chef_unité = $request->avis_chef_unité;
-            $demande->chef_section_id = $request->chef_section_id;
+            $compte->avis_admin = $request->avis_admin;
+            $compte->avis_chef_unité = $request->avis_chef_unité;
+            $compte->chef_section_id = $request->chef_section_id;
     
-            $demande->save();
+            $compte->save();
     
-            return redirect('/chef_sections')->with('success','demande ajouté avec succes');
+            return redirect('/chef_sections/'.$compte->chef_section_id.'/compte_rendu/index')->with('success','Compte-Rendu ajouté avec succes');
         }
        
+
+    
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function element_show( $element_id, $demande_id)
+    public function element_show( $element_id, $compte_id)
     {
-        // $id=    request()->has('demande_id');
-        // dd($demande_id);
-        $compte= CompteRendu::findOrFail($demande_id);
-        // $demande = DB::table('demandes')->where('id', $demande_id)->first();
+        // $id=    request()->has('compte_id');
+        // dd($compte_id);
+        $compte= CompteRendu::findOrFail($compte_id);
+        // $compte = DB::table('comptes')->where('id', $compte_id)->first();
 
 
-        // dd($demande);
+        // dd($compte);
         return view('elements.compte_rendu.show',
         ['compte'=>$compte
         ]);
     }
-    public function chef_show( $chef_section_id, $demande_id)
+    public function chef_show( $chef_section_id, $compte_id)
     {
         // dd( $id );
         // dd(request()->query());
-        $compte= CompteRendu::findOrFail($demande_id);
+        $compte= CompteRendu::findOrFail($compte_id);
 
-        // dd($demande);
+        // dd($compte);
         return view('chef_section.compte_rendu.show',
 
         ['compte'=>$compte
@@ -144,12 +149,14 @@ class CompteRenduController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function chef_destroy($chef_id, $id)
     {
         $compte = CompteRendu::findOrFail($id);
         
+        $chef= $compte->chef_section_id;
         $this->authorize('delete',$compte);
 
         $compte->delete();
+        return redirect('chef_sections/'. $chef. '/compte_rendu/index')->with('success','Compte-Rendu supprimé');
     }
 }

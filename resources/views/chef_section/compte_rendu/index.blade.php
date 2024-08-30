@@ -1,7 +1,9 @@
 <x-layout>
 
     <x-slot:heading>
-        Comptes-Rendus
+        Liste des Comptes-Rendus
+       
+        <a href="/{{$chef_section_path}}" class="btn btn-light">Retour</a>
     </x-slot:heading>
 
     {{-- <div >
@@ -10,7 +12,7 @@
             <input type="text"  name="search" placeholder="chercher un element..">
         </form>
       </div> --}}
-    <h1 class="text-black-500 mb-2">Liste des comptes rendus:</h1>
+    
 
     @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -26,27 +28,31 @@
     <div class="space-y-4">
     @foreach ($comptes as $compte)
 
-    <a href="{{ $compte->id}}/show" class=" block px-4 py-6 border border-gray-200 rounded-lg">
+    <a href="{{ $compte->id}}/show" class="  list-group list-group-flush list-group-horizontal">
     
-        <li><strong>Compte-rendu</strong>: {{ $compte->titre}} {{ $compte->contenu}}
+        <li class="mb-3 list-group-item list-group-item-action 
+       list-group-item-light"
+        
+        ><strong>Compte-rendu</strong>: {{ $compte->titre}} {{ $compte->contenu}}
     
             {{ $compte->date}} 
         
     </li>
     
-    {{-- </a> --}}
-    <form action="{{ route('elements.destroy', $compte->id)}}" method="POST">
+    </a>
+    {{-- <form action="{{ route('demandes.destroy', $compte->id)}}" method="POST" >
         @method('delete')
         @csrf
         
         <button type="submit" class="bg-red text-white-400" >Delete</button>
-    </form>
+    </form> --}}
+    
     @endforeach
 
     </div>
-    <x-button href="{{url(''.$path.'/create')}}">Faire compte-rendu</x-button>
-
+    <x-button href="{{url(''.$path.'/create')}}" class="btn btn-secondary">Faire compte-rendu</x-button>
+    
     <div>
-        {{-- {{ $demandes->links() }} --}}
+        {{ $comptes->links('pagination::bootstrap-5') }}
     </div>
 </x-layout>

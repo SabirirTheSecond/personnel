@@ -15,16 +15,31 @@
         {{ session('error') }}
     </div>
   @endif
-    
-    <p>
-        <strong> Titre: </strong> {{$compte->titre}} <strong> Contenu: </strong>{{$compte->contenu}} 
-
-        <strong> Date: </strong> {{$compte->date}} 
-    </p>
-
+  <table class="table">
+    <thead >
+      <tr>
+        <th scope="col">Titre</th>
+        <th scope="col">Contenu</th>
+        <th scope="col">Date</th>
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" >{{$compte->titre}} </th>
+        <td>{{$compte->contenu}}</td>
+        <td>{{$compte->date}}</td>
+       
+      </tr>
+     
+      
+    </tbody>
+  </table>
+   
     <div>
         {{-- <x-button href="{{ url('/chef_sections/' .$chef->id. '/edit')}}">Edit</x-button> --}}
-        <x-button href="/elements/{{$compte->element_id}}/compte_rendu/index">Retour</x-button>
+        <x-button href="/elements/{{$compte->element_id}}/compte_rendu/index" class="btn btn-light">Retour</x-button>
     </div>
     
 </x-layout>

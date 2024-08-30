@@ -115,7 +115,7 @@
   
   {{-- ------------------------raison ------------------- --}}
   
-                  <div class="sm:col-span-4">
+                  <div class="sm:col-span-4 mb-2">
                     <label for="raison" class="block text-sm font-medium leading-6 text-gray-900">Raison </label>
                     <div class="mt-2">
                       <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -136,9 +136,9 @@
   
                     
              
-            <div class="mt-6 flex items-center justify-end gap-x-6">
-              <x-button  href="index" class="text-sm font-semibold leading-6 text-gray-900">Cancel</x-button>
-              <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+            <div class="mb-2 flex items-center justify-end gap-x-6">
+              <x-button  href="index" class="btn btn-danger">Cancel</x-button>
+              <button type="submit" class="btn btn-info rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
             </div>
           </form>
           

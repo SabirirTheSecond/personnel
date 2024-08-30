@@ -16,7 +16,7 @@ class BilletController extends BaseController
      */
     public function index()
     {
-        $billets= Billet::all();
+        $billets= Billet::latest()->paginate(10);
 
         
         return view("billet.index",compact("billets"));
